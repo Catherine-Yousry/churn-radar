@@ -32,8 +32,6 @@ application.
                                                                     threshold.
   -----------------------------------------------------------------------------------------------------
 
-> If the actual filenames in your shared folder differ, update the names
-> in this table to match them.
 
 ## Workflow
 
