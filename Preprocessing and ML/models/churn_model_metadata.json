@@ -1,0 +1,64 @@
+{
+  "model_name": "Logistic Regression",
+  "threshold": 0.46,
+  "features": [
+    "gender",
+    "SeniorCitizen",
+    "Partner",
+    "Dependents",
+    "tenure",
+    "PhoneService",
+    "MultipleLines",
+    "InternetService",
+    "OnlineSecurity",
+    "OnlineBackup",
+    "DeviceProtection",
+    "TechSupport",
+    "StreamingTV",
+    "StreamingMovies",
+    "Contract",
+    "PaperlessBilling",
+    "PaymentMethod",
+    "MonthlyCharges",
+    "TotalCharges"
+  ],
+  "numeric_features": [
+    "SeniorCitizen",
+    "tenure",
+    "MonthlyCharges",
+    "TotalCharges"
+  ],
+  "categorical_features": [
+    "gender",
+    "Partner",
+    "Dependents",
+    "PhoneService",
+    "MultipleLines",
+    "InternetService",
+    "OnlineSecurity",
+    "OnlineBackup",
+    "DeviceProtection",
+    "TechSupport",
+    "StreamingTV",
+    "StreamingMovies",
+    "Contract",
+    "PaperlessBilling",
+    "PaymentMethod"
+  ],
+  "target_mapping": {
+    "No": 0,
+    "Yes": 1
+  },
+  "random_state": 42,
+  "project_priority_metric": "Recall",
+  "final_selection_metric": "F1",
+  "threshold_selection_metric": "F1",
+  "test_metrics": {
+    "Accuracy": 0.7224982256919801,
+    "Precision": 0.48657187993680884,
+    "Recall": 0.8235294117647058,
+    "F1": 0.6117179741807348,
+    "ROC-AUC": 0.8412978893797307,
+    "PR-AUC": 0.6325780038908728
+  }
+}
