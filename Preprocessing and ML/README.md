@@ -113,10 +113,3 @@ greater than or equal to the selected threshold (`0.46`).
 probabilities = model.predict_proba(customer_data)[:, 1]
 predictions = (probabilities >= 0.46).astype(int)
 ```
-
-## Reproducibility
-
-The notebook uses a fixed random state for reproducible data splitting
-and model experiments. For a fresh, consistent run, restart the notebook
-kernel and run all cells from top to bottom before exporting the model
-and metadata.
