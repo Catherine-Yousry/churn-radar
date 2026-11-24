@@ -1,6 +1,6 @@
 {
-  "model_name": "Logistic Regression",
-  "threshold": 0.46,
+  "model_name": "Tuned CatBoost",
+  "threshold": 0.44,
   "features": [
     "gender",
     "SeniorCitizen",
@@ -51,14 +51,14 @@
   },
   "random_state": 42,
   "project_priority_metric": "Recall",
-  "final_selection_metric": "F1",
-  "threshold_selection_metric": "F1",
+  "final_selection_metric": "Recall",
+  "threshold_selection_metric": "Precision (Recall >= 0.80)",
   "test_metrics": {
-    "Accuracy": 0.7224982256919801,
-    "Precision": 0.48657187993680884,
-    "Recall": 0.8235294117647058,
-    "F1": 0.6117179741807348,
-    "ROC-AUC": 0.8412978893797307,
-    "PR-AUC": 0.6325780038908728
+    "Accuracy": 0.7239176721078779,
+    "Precision": 0.4884080370942813,
+    "Recall": 0.8449197860962567,
+    "F1": 0.6190009794319294,
+    "ROC-AUC": 0.8483505128006407,
+    "PR-AUC": 0.6680151486290444
   }
 }
