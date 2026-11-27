@@ -123,3 +123,84 @@ where s.internetservice = 'Fiber optic'
   and b.monthlycharges > 80.00
   and b.tenure < 12
 order by b.monthlycharges desc;
+go
+-- 4) views & stored procedures (modular code & reusability)
+-- 1. view: complete customer churn profile (joins all 4 tables for bi/reporting)
+create view vw_customer_churn_summary as
+select 
+    c.customerid,
+    c.gender,
+    c.senior_citizen,
+    c.partner,
+    d.dependents_yn,
+    s.phoneservices,
+    s.multiplelines,
+    s.internetservice,
+    s.onlinesecurity,
+    s.onlinebackup,
+    s.deviceprotection,
+    s.techsupport,
+    s.streamingtv,
+    s.streamingmovies,
+    b.tenure,
+    b.contract,
+    b.paperlessbilling,
+    b.paymentmethod,
+    b.monthlycharges,
+    b.totalcharges,
+    b.churn
+from customer c
+join dependents d on c.customerid = d.customerid
+join services s on c.customerid = s.customerid
+join billing b on c.customerid = b.customerid;
+go
+
+-- 2. view: high-risk active customers (still subscribed, but match top churn drivers)
+create view vw_high_risk_active_customers as
+select 
+    customerid,
+    tenure,
+    contract,
+    internetservice,
+    techsupport,
+    paymentmethod,
+    monthlycharges
+from vw_customer_churn_summary
+where churn = 'No'
+  and contract = 'Month-to-month'
+  and monthlycharges > 70.00;
+go
+
+-- 3. stored procedure: get churn KPIs for any contract type
+create procedure sp_get_churn_by_contract
+    @contract_type varchar(25)
+as
+begin
+    select 
+        contract,
+        count(*) as total_customers,
+        round(avg(monthlycharges), 2) as avg_monthly_bill,
+        sum(case when churn = 'Yes' then 1 else 0 end) as churned_count,
+        round(sum(case when churn = 'Yes' then 1.0 else 0 end) * 100.0 / count(*), 2) as churn_rate_pct
+    from vw_customer_churn_summary
+    where contract = @contract_type
+    group by contract;
+end;
+go
+
+-- 4. stored procedure: log or update a customer's churn status
+create procedure sp_update_customer_churn
+    @customerid varchar(50),
+    @new_churn_status varchar(5)
+as
+begin
+    update billing
+    set churn = @new_churn_status
+    where customerid = @customerid;
+end;
+go
+
+-- test queries to verify views & procedures
+select top 10 * from vw_customer_churn_summary;
+select top 10 * from vw_high_risk_active_customers;
+exec sp_get_churn_by_contract @contract_type = 'Month-to-month';
